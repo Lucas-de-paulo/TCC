@@ -14,10 +14,25 @@ public class Player : MonoBehaviour
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
 
+    public float distance = 2f;
+
     void Start ()
     {
         m_Rigidbody = GetComponent<Rigidbody> ();
         MoveAction.Enable();
+    }
+
+    void Update()
+    {
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, distance))
+        {
+            Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.green);
+            Debug.Log("Hit: " + hit.collider.name);
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.forward * distance, Color.red);
+        }
     }
 
     void FixedUpdate ()
